@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="../assets/css/style.css">
+<h1>Sign In</h1>
+<body>
+    <div class="login-box">
+
+<!-- <form action="/create-session" method="POST">
+    <div class="container">
+    <!-- <input type="email" name="email" placeholder="Email"  required>
+    <input type="password" name="password" placeholder="Password"  required>
+    <input type="submit" value="Sign In"> -->
+    <!-- <label>Username : </label>   
+            <input type="email" placeholder="Enter Username" name="email" required>  
+            <label>Password : </label>   
+            <input type="password" placeholder="Enter Password" name="password" required>  
+            <button type="submit">Login</button>   
+    </div>
+</form> --> 
+
+<form action="/users/create-session" method="POST">
+    <div>
+    <input type="email" name="email" placeholder="Email"  required><br>
+    </div>
+    <div>
+    <input type="password" name="password" placeholder="Password"  required><br>
+    </div>
+    <input type="submit" value="Sign In">
+    
+
+</form>
+<div>
+<p>
+    <a href="/users/forget-password">Forget Password? </a>
+  </p>
+</div>
+
+
+    <a href="/users/auth/google"><button>Google Sign In</button></a>
+    </div>
+</body>
