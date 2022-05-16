@@ -5,7 +5,7 @@ let transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: 'anish.kr365@gmail.com',
+        user: '',
         pass: ''
     }
 });
@@ -27,7 +27,3 @@ let transporter = nodemailer.createTransport({
 // }
 
 
-module.exports = {
-    transporter: transporter
-    // renderTemplate: renderTemplate
-}

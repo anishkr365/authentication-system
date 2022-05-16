@@ -13,7 +13,7 @@ const passportLocal= require('./config/passport-local-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 const MongoStore = require('connect-mongo')(session);
-const flash = require('connect-flash');
+
 const customMware = require('./config/middleware');
 app.use(express.urlencoded());
 app.use(express.static('assets'));
@@ -54,8 +54,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+const flash = require('connect-flash');
 app.use(flash());
-app.use(customMware.setFlash);
+// app.use(customMware.setFlash);
+app.use(function(req,res,next){ 
+    res.locals.flash={
+     'success':req.flash('success'),
+     'error':req.flash('error')
+    }
+    next();
+   });
 
 
 

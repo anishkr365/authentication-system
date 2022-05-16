@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
+const crypto=require('crypto');
+const encrypt = require('../functions/encrypt');
 
 
 
@@ -31,28 +34,61 @@ module.exports.signIn = function(req, res){
         title: "Codeial | Sign In"
     })
 }
-
-module.exports.create = function(req, res){
-    console.log(req.body)
-    if (req.body.password != req.body.confirm_password){
+module.exports.create = async function(req,res){
+    if(req.body.password != req.body.confirm_password){
+      req.flash('error','password does not match');
         return res.redirect('back');
-    }
-
-    User.findOne({email: req.body.email}, function(err, user){
-        if(err){console.log('error in finding user in signing up'); return}
-
-        if (!user){
-            User.create(req.body, function(err, user){
-                if(err){console.log('error in creating user while signing up'); return}
-
-                return res.redirect('/users/sign-in');
-            })
-        }else{
-            return res.redirect('back');
+    } else {
+          req.body.password =  await encrypt.encryption(req.body.password);
+          
+        try {
+            let user = await User.findOne({email : req.body.email});
+            if(!user){
+              User.create(req.body,function(err){
+                  if(err){console.log('pushing value error'); return res.redirect('back')}
+                  else{
+                     console.log("successfully created"); 
+                     req.flash('success','Your account is created');
+                     return res.redirect('/users/sign-in')}
+              })
+  
+            } else{
+                  req.flash('error','email already exists');
+                return res.redirect('back');
+            }
+        } catch (error) {
+            if(err){console.log(err); return res.redirect('back')}
         }
-
-    });
+  
+     
+    }
+  
+  
 }
+
+
+
+// module.exports.create = function(req, res){
+//     console.log(req.body)
+//     if (req.body.password != req.body.confirm_password){
+//         return res.redirect('back');
+//     }
+
+//     User.findOne({email: req.body.email}, function(err, user){
+//         if(err){console.log('error in finding user in signing up'); return}
+
+//         if (!user){
+//             User.create(req.body, function(err, user){
+//                 if(err){console.log('error in creating user while signing up'); return}
+
+//                 return res.redirect('/users/sign-in');
+//             })
+//         }else{
+//             return res.redirect('back');
+//         }
+
+//     });
+// }
 // sign in and create a session for the user
 module.exports.createSession = function(req, res){
     req.flash ('success', 'logged in successfully');
