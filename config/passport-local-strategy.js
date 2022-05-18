@@ -1,34 +1,77 @@
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
+// const encrypt = require('../functions/encrypt');
 
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 
 // authentication using passport
 passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passReqToCallback: true
-    },
-    function(req,email, password, done){
-        // find a user and establish the identity
-        User.findOne({email: email}, function(err, user)  {
-            if (err){
-                req.flash('error',err);
-                return done(err);
-            }
+    usernameField: 'email',
+    passReqToCallback:true
+},
+ async function(req,email, password, done) {
+    // find a user and establish the identity
+      try { let user = await  User.findOne({ email: email} )
 
-            if (!user || user.password != password){
-               req.flash('error','Invalid username/password');
-                return done(null, false);
-            }
-
-            return done(null, user);
-        });
-    }
+        if (!user  ) {
+            // console.log(user.password);
+            req.flash('error','email not present')
+            console.log('Invalid Username/Password');
+            //  res.redirect('/users/sign-up')
+            return done(null, false);
+            
+        }
+        if(user){
+           const validpassword = await bcrypt.compare(password,user.password);
+           if(validpassword==false){
+               req.flash('error','password is incorrect');
+               req.logOut();
+               return done(null,false);
+           } else{
+               return done(null,user);
+           }
+            
+        }
+ } 
+ catch(err){
+         console.log(err);
+         return done(err);
+     
+ }
+    
+}
 
 
 ));
+
+
+// authentication using passport
+// passport.use(new LocalStrategy({
+//         usernameField: 'email',
+//         passReqToCallback: true
+//     },
+//     function(req,email, password, done){
+//         // find a user and establish the identity
+//         User.findOne({email: email}, function(err, user)  {
+//             if (err){
+//                 req.flash('error',err);
+//                 return done(err);
+//             }
+// //           var flag = encrypt.dencryption(password);
+//             if (!user || flag){
+//                req.flash('error','Invalid username/password');
+//                 return done(null, false);
+//             }
+
+//             return done(null, user);
+//         });
+//     }
+
+
+// ));
 
 
 // serializing the user to decide which key is to be kept in the cookies
