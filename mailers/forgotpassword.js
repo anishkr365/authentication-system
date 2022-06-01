@@ -3,7 +3,7 @@ const nodeMailer=require('../config/nodemailer');
 module.exports.forgotpassword=function(email,Token){
    
     nodeMailer.transporter.sendMail({
-        from: 'anish.kr365@gmail.com',          // sender address
+        from: 'vks7244073@gmail.com',          // sender address
         to:email ,  // list of receivers
         subject: "Forgot Password",     //  Subject line
         html:  `https://sch-deploy-auth-system.herokuapp.com/users/newpassword/?token=${Token}`

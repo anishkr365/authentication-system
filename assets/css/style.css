@@ -1,36 +1,51 @@
 body {
-    background-color: #344a72;
+    background-color:grey;
     font-family: "Roboto", sans-serif;
+    
   }
   
   .signup-box {
     width: 360px;
-    height: 620px;
+    height: 360px;
     margin: auto;
-    background-color: white;
-    border-radius: 3px;
+    background-color: wheat;
+    border-radius: 10px;
+    border-color: black;
+    border-style: groove;
   }
   
   .login-box {
     width: 360px;
-    height: 280px;
+    height: 300px;
     margin: auto;
-    border-radius: 3px;
-    background-color: white;
+    border-radius: 10px;
+    background-color: wheat;
+    border-color: black;
+    border-style: groove;
   }
   
   h1 {
     text-align: center;
     padding-top: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: crimson;
+    font-size: large;
+    font-weight: 300;
+    transition: color 0.5s;
   }
-  
+  h1:hover{
+    color: lightgrey;
+  border-bottom: 1px solid black;
+  }
   h4 {
     text-align: center;
+    font-family: cursive;
   }
   
   form {
     width: 300px;
     margin-left: 20px;
+    height: 1000px;
   }
   
   form label {
@@ -41,25 +56,28 @@ body {
   
   form input {
     width: 100%;
-    padding: 7px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 6px;
-    outline: none;
+    border-radius: 20px;
+    padding: 2px;
+    margin: 10px;
+    height: 30px;
+    border: 1px solid #999;
+    outline: none;;
   }
   input[type="button"] {
     width: 320px;
-    height: 35px;
+    height: 60px;
     margin-top: 20px;
     border: none;
-    background-color: #49c1a2;
-    color: white;
+    border-radius: 20px;
+    
     font-size: 18px;
   }
   p {
     text-align: center;
     padding-top: 20px;
     font-size: 15px;
+    font-style: italic;
+    
   }
   .para-2 {
     text-align: center;
@@ -71,4 +89,36 @@ body {
     color: #49c1a2;
   }
   
+  #nav{
+    display: flex;
+  }
   
+#nav  a {
+  color:black;
+  text-decoration: none;
+}
+
+#nav a {
+  transition: color 0.5s, border-bottom 4s;
+}
+
+#nav  a:hover {
+  color: lightgrey;
+  border-bottom: 1px solid black;
+}
+a{
+ 
+  font-size: small;
+  font-weight: 20;
+  text-emphasis: 5;
+  color:brown;
+}
+a:link{
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration:underline
+}

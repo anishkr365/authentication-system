@@ -2,6 +2,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const crypto=require('crypto');
 const encrypt = require('../functions/encrypt');
+const nodemailer = require('../mailers/forgotpassword');
+const TOKEN = require('../models/resetTokens');
 
 
 
@@ -108,3 +110,34 @@ module.exports.destroySession = function(req, res){
 
     return res.redirect('/');
 }
+
+
+module.exports.forgotpage=function(req,res){
+    return res.render('forgot');
+  }
+  
+  /// sending link through email
+  module.exports.sendlink=async function(req,res){
+     
+    let USER=await User.findOne({email:req.body.username});
+    console.log("this is the user", req.body);
+       if(USER){
+           let  hex=crypto.randomBytes(20).toString('hex');  
+         let Token =await  TOKEN.create({
+                        userid:USER._id,
+                        token:hex
+                    });
+                    setTimeout(function(){
+                        Token.remove();
+                     },120000);
+          
+           nodemailer.forgotpassword(req.body.username,Token.token);
+           req.flash('success','link sent to this email');
+           return res.redirect('back');
+       }
+       else{
+           req.flash('error','This email do not exists in the database');
+           return res.redirect('back');
+       }
+    
+  }
