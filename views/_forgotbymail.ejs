@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/css/style.css">
+
+<body>
+    <div class="login-box">
+        <h1>Reset password</h1>
+
+
+<form action="/users/mail" method="POST">
+    
+    <div>
+    <input type="password" name="password" placeholder="Password"  required><br>
+    </div>
+    <div>
+        <input type="password" name="confirmpassword" placeholder="confirmpassword"  required><br>
+        </div>
+    <div>
+        <input type="hidden" name='token' value='<%=token%>'>
+        </div>
+    
+    <input type="submit" value="Submit">
+    
+
+
+
+    </div>
+</form>
+</body>

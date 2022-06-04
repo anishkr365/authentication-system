@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
-const resetTokens=require('../models/resetTokens');
+// const resetTokens=require('../models/resetTokens');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
@@ -65,7 +65,8 @@ router.get("/forget-password",usersController.forgot);
 
 
 router.post('/forget-password',usersController.sendlink);
-
+router.get('/newpassword', usersController.newpassword);
+router.post('/mail',usersController.resetThroughMail);
 
 
 

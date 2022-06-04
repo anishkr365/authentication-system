@@ -90,7 +90,10 @@ body {
   }
   
   #nav{
+    position: relative;
     display: flex;
+    justify-content:space-around ;
+    flex-direction: row;
   }
   
 #nav  a {
@@ -121,4 +124,10 @@ a:visited {
 }
 a:hover {
   text-decoration:underline
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
 }

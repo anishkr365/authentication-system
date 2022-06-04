@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const crypto=require('crypto');
 const encrypt = require('../functions/encrypt');
 const nodemailer = require('../mailers/forgotpassword');
-const TOKEN = require('../models/resetTokens');
+const TOKEN = require('../models/token');
+// const tokens = require('../models/token');
 
 
 
@@ -111,6 +112,7 @@ module.exports.destroySession = function(req, res){
     return res.redirect('/');
 }
 
+// rendering forget password form after user clicks on forgot password
 
 module.exports.forgotpage=function(req,res){
     return res.render('forgot');
@@ -127,12 +129,14 @@ module.exports.forgotpage=function(req,res){
                         userid:USER._id,
                         token:hex
                     });
+                    // USER.updateOne({email:req.body.username},{$set:{token:hex}});
                     setTimeout(function(){
                         Token.remove();
                      },120000);
           
            nodemailer.forgotpassword(req.body.username,Token.token);
            req.flash('success','link sent to this email');
+           console.log(Token.token)
            return res.redirect('back');
        }
        else{
@@ -141,3 +145,58 @@ module.exports.forgotpage=function(req,res){
        }
     
   }
+
+
+
+
+  
+///////////CReate tokens
+
+
+module.exports.newpassword=function(req,res){
+  console.log(req.query.token)
+    TOKEN.findOne({token:req.query.token},function(err,Token){
+     if(!Token){
+        return res.end('<h1> TOKEN EXPIRED :( </h1>');
+     }else{
+            return res.render('_forgotbymail',{
+                    token:Token.token,
+                    title:"codieal"
+            });
+        } 
+   });
+  
+  }
+  
+  
+
+  
+  ///////RESET PASSWORD BEFORE LOGIN 
+  module.exports.resetThroughMail= async function(req,res){
+     try{
+       let Token= await  TOKEN.findOne({token:req.body.token})
+      console.log(Token.userid)
+       let USER = await  User.findOne({_id:Token.userid});
+       console.log(USER.password,USER.name);
+              if(req.body.password==req.body.confirmpassword){
+                  USER.password=await encrypt.encryption(req.body.password);
+                  USER.save();
+                  req.flash('success','password changed');
+                  return res.redirect('/users/sign-in');
+              }else{
+                  req.flash('error','password/confirm-password do not match');
+                  return res.redirect('back');
+              }
+        
+            }
+  
+            catch(err){
+                 req.flash('error','error in finding database');
+                 console.log(err);
+                 return res.redirect('back');
+            }
+    
+  
+  
+  }
+  
