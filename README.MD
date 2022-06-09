@@ -1,6 +1,6 @@
-GITHUB LINK:-https://github.com/sc43412/authentication-system.git
+GITHUB LINK:-https://github.com/anishkr365/authentication-system.git
 
-DEPLOYMENT LINK:- https://sch-deploy-auth-system.herokuapp.com/
+DEPLOYMENT LINK:- https://nodejs-auth-anish.herokuapp.com/
 
 Authentication_System
 Starter code of any website having authentication System ,I have used passport local strategy and passport google oauth2 and pasword save here is encrypted format for security.
