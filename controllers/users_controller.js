@@ -22,7 +22,7 @@ module.exports.signUp = function(req, res){
 
 
     return res.render('user_sign_up', {
-        title: "Codeial | Sign Up"
+        title: " Sign Up"
     })
 }
 
@@ -31,10 +31,12 @@ module.exports.signUp = function(req, res){
 module.exports.signIn = function(req, res){
 
     if (req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/users/profile',{
+       
+})
     }
     return res.render('user_sign_in', {
-        title: "Codeial | Sign In"
+        title: " Sign In"
     })
 }
 module.exports.create = async function(req,res){

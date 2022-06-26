@@ -1,9 +1,11 @@
 <h1>
-    Codeial / Profile Page
+     My Profile
 </h1>
 <% if(locals.user){ %>
     
-    <p><%= user.name %></p>
+    <!-- <p><%= user.name %></p> -->
+    <div class="user-details">
+     <h2> <%= user.name %></h2>
     <p><%= user.email %></p>
-    
-    <% } %>
+   
+    <% } %></div>
